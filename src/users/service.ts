@@ -21,7 +21,7 @@ export class UserService implements IUserService {
 		@inject(TYPES.UsersRepository) private usersRepository: IUsersRepository,
 	) {}
 
-	async createUser({ email, name, password }: UserRegisterDto): Promise<UserModel | null> {
+	public async createUser({ email, name, password }: UserRegisterDto): Promise<UserModel | null> {
 		const candidate = await this.usersRepository.find(email);
 		if (candidate) {
 			return null;
@@ -33,7 +33,7 @@ export class UserService implements IUserService {
 		return this.usersRepository.create(user);
 	}
 
-	async validateUser({ email, password }: UserLoginDto): Promise<boolean> {
+	public async validateUser({ email, password }: UserLoginDto): Promise<boolean> {
 		const candidate = await this.usersRepository.find(email);
 		if (!candidate) {
 			return false;
@@ -42,7 +42,7 @@ export class UserService implements IUserService {
 		return newUser.comparePassword(password);
 	}
 
-	async getUserInfo(email: string): Promise<UserModel | null> {
+	public async getUserInfo(email: string): Promise<UserModel | null> {
 		return this.usersRepository.find(email);
 	}
 }
