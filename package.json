@@ -6,6 +6,7 @@
 	"scripts": {
 		"start": "ts-node ./src/main.ts",
 		"dev": "nodemon",
+		"dev:inspect": "nodemon -e ts,json --exec node --inspect=localhost:9222 -r ts-node/register src/main.ts",
 		"lint": "eslint './src/**",
 		"lint:fix": "eslint './src/** --fix",
 		"build": "tsc",
@@ -27,12 +28,15 @@
 	},
 	"homepage": "https://github.com/Dafaqtx/dashboard-api#readme",
 	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"body-parser": "^1.19.1",
 		"express": "^4.17.2",
 		"inversify": "^6.0.1",
 		"reflect-metadata": "^0.1.13",
 		"tslog": "^3.3.1"
 	},
 	"devDependencies": {
+		"@types/bcryptjs": "^2.4.2",
 		"@types/express": "^4.17.13",
 		"@typescript-eslint/eslint-plugin": "^5.9.1",
 		"@typescript-eslint/parser": "^5.9.1",
