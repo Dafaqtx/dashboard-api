@@ -1,3 +1,4 @@
+import { IConfigService } from './config/service';
 import { TYPES } from './types';
 import express, { Express } from 'express';
 import { Server } from 'http';
@@ -7,6 +8,7 @@ import { ILogger } from './logger/interface';
 import { UserController } from './users/controller';
 import 'reflect-metadata';
 import { json } from 'body-parser';
+import { PrismaService } from './database/prisma-service';
 
 @injectable()
 export class App {
@@ -18,6 +20,8 @@ export class App {
 		@inject(TYPES.ILogger) private logger: ILogger,
 		@inject(TYPES.UsersController) private userController: UserController,
 		@inject(TYPES.ExceptionFilter) private exceptionFilter: ExceptionFilter,
+		@inject(TYPES.ConfigService) private configService: IConfigService,
+		@inject(TYPES.PrismaService) private prismaService: PrismaService,
 	) {
 		this.app = express();
 	}
@@ -38,6 +42,7 @@ export class App {
 		this.useMiddleware();
 		this.useRoutes();
 		this.useExceptionsFilter();
+		await this.prismaService.connect();
 
 		this.server = this.app.listen(this.port);
 		this.logger.log(`Сервер запущен на http://localhost:${this.port}`);
