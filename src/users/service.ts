@@ -8,14 +8,14 @@ import { UserRegisterDto } from './dto/register';
 import { User } from './entity';
 import { IUsersRepository } from './repository';
 
-export interface IUserService {
+export interface IUsersService {
 	createUser(dto: UserRegisterDto): Promise<UserModel | null>;
 	validateUser(dto: UserLoginDto): Promise<boolean>;
 	getUserInfo(email: string): Promise<UserModel | null>;
 }
 
 @injectable()
-export class UserService implements IUserService {
+export class UserService implements IUsersService {
 	constructor(
 		@inject(TYPES.ConfigService) private configService: IConfigService,
 		@inject(TYPES.UsersRepository) private usersRepository: IUsersRepository,
